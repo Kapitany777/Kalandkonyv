@@ -56,5 +56,10 @@ namespace Kalandkonyv
                 this.Eletero = 0;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{this.Nev} | HP: {this.Eletero}";
+        }
     }
 }
