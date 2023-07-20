@@ -45,10 +45,12 @@ namespace Kalandkonyv
 
                 Console.WriteLine("Merre mész tovább?");
 
-                foreach (int sorszam in aktualisFejezet.TovabbiLehetosegek)
+                foreach (int lehetoseg in aktualisFejezet.TovabbiLehetosegek)
                 {
-                    Console.WriteLine(sorszam);
+                    Console.WriteLine(lehetoseg);
                 }
+
+                int sorszam = ConsoleHandler.SorszamBekeres();
 
                 break;
             }
