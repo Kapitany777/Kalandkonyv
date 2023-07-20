@@ -8,7 +8,7 @@ namespace Kalandkonyv
 {
     public class VeresBosszu : Tortenet
     {
-        public VeresBosszu(Jatekos jatekos) : base(jatekos)
+        public VeresBosszu(Jatekos jatekos, bool harc) : base(jatekos, harc)
         {
             this.Cim = "A véres bosszú";
         }

@@ -10,13 +10,16 @@ namespace Kalandkonyv
     {
         public string Cim { get; protected set; }
         public Jatekos Jatekos { get; }
+        public bool Harc { get; }
 
         protected List<Fejezet> fejezetek;
 
-        public Tortenet(Jatekos jatekos)
+        public Tortenet(Jatekos jatekos, bool harc)
         {
             this.Cim = string.Empty;
             this.Jatekos = jatekos;
+
+            this.Harc = harc;
 
             fejezetek = new List<Fejezet>();
             FejezetekLetrehozasa();
