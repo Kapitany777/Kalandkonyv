@@ -27,16 +27,22 @@ namespace Kalandkonyv
         public string Szoveg { get; }
 
         /// <summary>
+        /// Ha a játékos eléri ezt a helyszínt, akkor győz-e?
+        /// </summary>
+        public bool Gyozelem { get; set; }
+
+        /// <summary>
         /// Merre lehet továbbmenni az adott helyszínről
         /// </summary>
         public List<int> TovabbiLehetosegek { get; }
 
-        public Fejezet(int sorszam, string cimke, string szoveg, List<int> tovabbiLehetosegek)
+        public Fejezet(int sorszam, string cimke, string szoveg, List<int> tovabbiLehetosegek, bool gyozelem = false)
         {
             Sorszam = sorszam;
             Cimke = cimke;
             Szoveg = szoveg;
             TovabbiLehetosegek = tovabbiLehetosegek;
+            Gyozelem = gyozelem;
         }
 
         public void Kiir()

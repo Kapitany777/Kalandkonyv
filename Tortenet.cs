@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kalandkonyv
 {
+    /// <summary>
+    /// A történeteket kezelő absztrakt osztály
+    /// </summary>
     public abstract class Tortenet
     {
         public string Cim { get; protected set; }
@@ -43,16 +46,49 @@ namespace Kalandkonyv
                 aktualisFejezet.Kiir();
                 Console.WriteLine();
 
+                if (aktualisFejezet.Gyozelem)
+                {
+                    Console.WriteLine("Gratulálok, megnyerted a játékot!");
+                    break;
+                }
+
+                if (aktualisFejezet.TovabbiLehetosegek.Count == 0)
+                {
+                    Console.WriteLine("Kalandod itt véget ér...");
+                    break;
+                }
+
                 Console.WriteLine("Merre mész tovább?");
 
                 foreach (int lehetoseg in aktualisFejezet.TovabbiLehetosegek)
                 {
-                    Console.WriteLine(lehetoseg);
+                    var cimke = fejezetek
+                       .Where(f => f.Sorszam == lehetoseg)
+                       .First()
+                       .Cimke;
+
+                    Console.WriteLine($"{lehetoseg} - {cimke}");
                 }
 
-                int sorszam = ConsoleHandler.SorszamBekeres();
+                Fejezet? kovetkezoFejezet = null;
 
-                break;
+                do
+                {
+                    int sorszam = ConsoleHandler.SorszamBekeres();
+
+                    try
+                    {
+                        kovetkezoFejezet = fejezetek
+                            .Where(f => f.Sorszam == sorszam && aktualisFejezet.TovabbiLehetosegek.Contains(sorszam))
+                            .First();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Console.WriteLine("Erre sajnos nem mehetsz tovább...");
+                    }
+                } while (kovetkezoFejezet == null);
+
+                aktualisFejezet = kovetkezoFejezet;
             }
         }
     }

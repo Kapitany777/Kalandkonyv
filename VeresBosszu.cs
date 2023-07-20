@@ -29,8 +29,10 @@ namespace Kalandkonyv
             fejezetek = new List<Fejezet>
             {
                 new Fejezet(1, "Falu", "Ott állsz a lerombolt falu főterén.", new() { 2 }),
-                new Fejezet(2, "Erdő", "Az erdőben mész.", new() { 1, 3 }),
-                new Fejezet(3, "Erdei tisztás", "Ott állsz az erdei tisztáson.", new() {})
+                new Fejezet(2, "Erdő", "Az erdőben mászkálsz ide-oda.", new() { 1, 3 }),
+                new Fejezet(3, "Erdei tisztás", "Ott állsz az erdei tisztáson.", new() { 4, 5 }),
+                new Fejezet(4, "Barlang", "Egy szörnyű troll fejbe vág itt...", new()),
+                new Fejezet(5, "Ork falu", "Felrobbantod az ork falut egy kazettás bombával!", new(), true)
             };
         }
     }
