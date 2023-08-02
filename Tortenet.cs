@@ -63,8 +63,7 @@ namespace Kalandkonyv
 
             while (true)
             {
-                Console.WriteLine(this.Jatekos);
-                Console.WriteLine();
+                this.Jatekos.Kiir();
 
                 aktualisFejezet.Kiir();
                 Console.WriteLine();
@@ -81,17 +80,9 @@ namespace Kalandkonyv
                     break;
                 }
 
-                Console.WriteLine("Merre mész tovább?");
+                aktualisFejezet.Szorny?.Kiir();
 
-                foreach (int lehetoseg in aktualisFejezet.TovabbiLehetosegek)
-                {
-                    var cimke = fejezetek
-                       .Where(f => f.Sorszam == lehetoseg)
-                       .First()
-                       .Cimke;
-
-                    Console.WriteLine($"{lehetoseg} - {cimke}");
-                }
+                LehetosegekKiirasa(aktualisFejezet);
 
                 Fejezet? kovetkezoFejezet = null;
 
@@ -99,6 +90,25 @@ namespace Kalandkonyv
                 {
                     int kovetkezoSorszam = ConsoleHandler.SorszamBekeres();
 
+                    // Ha gyógyítani szeretne
+                    if (kovetkezoSorszam == 100)
+                    {
+                        if (Jatekos.LehetGyogyitani)
+                        {
+                            Jatekos.Gyogyit();
+
+                            Console.WriteLine("Glutty, ez jól esett!");
+                            Console.WriteLine($"Még {Jatekos.Gyogyitalok} db italod maradt.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Most nincs erre szükség.");
+                        }
+
+                        continue;
+                    }
+
+                    // Egyébként egy újabb fejezetre szeretne lépni
                     try
                     {
                         kovetkezoFejezet = fejezetek
@@ -112,6 +122,30 @@ namespace Kalandkonyv
                 } while (kovetkezoFejezet == null);
 
                 aktualisFejezet = kovetkezoFejezet;
+            }
+        }
+
+        /// <summary>
+        /// Egy adott fejezet lehetőségeinek kiírása
+        /// </summary>
+        /// <param name="fejezet">A kiírandó fejezet</param>
+        private void LehetosegekKiirasa(Fejezet fejezet)
+        {
+            Console.WriteLine("Merre mész tovább?");
+
+            foreach (int lehetoseg in fejezet.TovabbiLehetosegek)
+            {
+                var cimke = fejezetek
+                   .Where(f => f.Sorszam == lehetoseg)
+                   .First()
+                   .Cimke;
+
+                Console.WriteLine($"{lehetoseg} - {cimke}");
+            }
+
+            if (Jatekos.LehetGyogyitani)
+            {
+                Console.WriteLine("100 - Gyógyítás");
             }
         }
     }

@@ -27,6 +27,11 @@ namespace Kalandkonyv
         public string Szoveg { get; }
 
         /// <summary>
+        /// Az adott helyszínen esetleg található szörny
+        /// </summary>
+        public Szorny? Szorny { get; set; }
+
+        /// <summary>
         /// Ha a játékos eléri ezt a helyszínt, akkor győz-e?
         /// </summary>
         public bool Gyozelem { get; set; }
@@ -48,6 +53,7 @@ namespace Kalandkonyv
             Szoveg = szoveg;
             TovabbiLehetosegek = tovabbiLehetosegek;
             Gyozelem = gyozelem;
+            Szorny = null;
         }
 
         /// <summary>

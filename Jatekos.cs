@@ -9,36 +9,50 @@ namespace Kalandkonyv
     /// <summary>
     /// A játékos
     /// </summary>
-    public class Jatekos
+    public class Jatekos : Szereplo
     {
         /// <summary>
         /// A játékos maximális életereje
         /// </summary>
         public const int MAX_ELETERO = 100;
-        
-        /// <summary>
-        /// A játékos neve
-        /// </summary>
-        public string Nev { get; }
 
         /// <summary>
-        /// A játékos aktuális életereje
+        /// A játékosnál lévő gyógyitalok kezdeti száma
         /// </summary>
-        public int Eletero { get; private set; }
+        public const int KEZDETI_GYOGYITAL = 4;
 
-        public Jatekos(string nev)
+        /// <summary>
+        /// Ennyi HP-t gyógyít egy ital
+        /// </summary>
+        public const int GYOGYITAS = 5;
+
+        /// <summary>
+        /// A játékosnál lévő gyógyitalok száma
+        /// </summary>
+        public int Gyogyitalok { get; private set; }
+
+        /// <summary>
+        /// Lehet-e gyógyítani a játékost?
+        /// </summary>
+        public bool LehetGyogyitani => Eletero < MAX_ELETERO && Gyogyitalok > 0;
+
+        public Jatekos(string nev) : base(nev, MAX_ELETERO)
         {
-            this.Nev = nev;
-            this.Eletero = MAX_ELETERO;
+            this.Gyogyitalok = KEZDETI_GYOGYITAL;
         }
 
         /// <summary>
         /// A játékos gyógyítása
         /// </summary>
-        /// <param name="gyogyitas">Ennyi plusz életerőt kap a gyógyítás során</param>
-        public void Gyogyit(int gyogyitas)
+        public void Gyogyit()
         {
-            this.Eletero += gyogyitas;
+            if (!this.LehetGyogyitani)
+            {
+                return;
+            }
+
+            this.Eletero += GYOGYITAS;
+            this.Gyogyitalok--;
 
             if (this.Eletero > MAX_ELETERO)
             {
@@ -46,23 +60,10 @@ namespace Kalandkonyv
             }
         }
 
-        /// <summary>
-        /// A játékos megsebzése
-        /// </summary>
-        /// <param name="sebzes">Ennyi életerőt veszít a játékos</param>
-        public void Sebez(int sebzes)
+        public override void Kiir()
         {
-            this.Eletero -= sebzes;
-
-            if (this.Eletero < 0)
-            {
-                this.Eletero = 0;
-            }
-        }
-
-        public override string ToString()
-        {
-            return $"{this.Nev} | HP: {this.Eletero}";
+            Console.WriteLine($"{this.Nev} | HP: {this.Eletero}");
+            Console.WriteLine();
         }
     }
 }
