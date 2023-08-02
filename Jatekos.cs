@@ -11,6 +11,9 @@ namespace Kalandkonyv
     /// </summary>
     public class Jatekos
     {
+        /// <summary>
+        /// A játékos maximális életereje
+        /// </summary>
         public const int MAX_ELETERO = 100;
         
         /// <summary>

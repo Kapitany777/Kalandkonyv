@@ -36,7 +36,12 @@ namespace Kalandkonyv
         /// </summary>
         public List<int> TovabbiLehetosegek { get; }
 
-        public Fejezet(int sorszam, string cimke, string szoveg, List<int> tovabbiLehetosegek, bool gyozelem = false)
+        public Fejezet(
+            int sorszam,
+            string cimke,
+            string szoveg,
+            List<int> tovabbiLehetosegek,
+            bool gyozelem = false)
         {
             Sorszam = sorszam;
             Cimke = cimke;
@@ -45,6 +50,9 @@ namespace Kalandkonyv
             Gyozelem = gyozelem;
         }
 
+        /// <summary>
+        /// A fejezet szövegének kiírása a konzolra
+        /// </summary>
         public void Kiir()
         {
             Console.WriteLine($"{this.Sorszam}. fejezet");

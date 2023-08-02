@@ -8,6 +8,10 @@ namespace Kalandkonyv
 {
     public static class ConsoleHandler
     {
+        /// <summary>
+        /// A hős nevének bekérése
+        /// </summary>
+        /// <returns>A hős neve</returns>
         public static string NevBekerese()
         {
             string? nev = string.Empty;
@@ -21,6 +25,10 @@ namespace Kalandkonyv
             return nev;
         }
 
+        /// <summary>
+        /// Igen / Nem válasz bekérése
+        /// </summary>
+        /// <returns>A megadott válasz nagybetűsre konvertálva</returns>
         public static string ValaszBekeres()
         {
             string? valasz = string.Empty;
@@ -34,6 +42,10 @@ namespace Kalandkonyv
             return valasz.ToUpper();
         }
 
+        /// <summary>
+        /// A következő fejezet sorszámának bekérése
+        /// </summary>
+        /// <returns>A beírt sorszám</returns>
         public static int SorszamBekeres()
         {
             string? valasz = string.Empty;

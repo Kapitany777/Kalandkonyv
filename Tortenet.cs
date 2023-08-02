@@ -11,10 +11,24 @@ namespace Kalandkonyv
     /// </summary>
     public abstract class Tortenet
     {
+        /// <summary>
+        /// A történet címe
+        /// </summary>
         public string Cim { get; protected set; }
+
+        /// <summary>
+        /// A játékos
+        /// </summary>
         public Jatekos Jatekos { get; }
+
+        /// <summary>
+        /// Legyen-e harc a játékban, vagy csak a történetet szeretnénk megismerni
+        /// </summary>
         public bool Harc { get; }
 
+        /// <summary>
+        /// A történet fejezetei
+        /// </summary>
         protected List<Fejezet> fejezetek;
 
         public Tortenet(Jatekos jatekos, bool harc)
@@ -28,10 +42,19 @@ namespace Kalandkonyv
             FejezetekLetrehozasa();
         }
 
-        public abstract void FejezetekLetrehozasa();
-
+        /// <summary>
+        /// A köszöntő szöveg kiírása
+        /// </summary>
         public abstract void Koszonto();
 
+        /// <summary>
+        /// A fejezetek létrehozása
+        /// </summary>
+        public abstract void FejezetekLetrehozasa();
+
+        /// <summary>
+        /// A játék futtatása
+        /// </summary>
         public void Futtatas()
         {
             Koszonto();
@@ -74,12 +97,12 @@ namespace Kalandkonyv
 
                 do
                 {
-                    int sorszam = ConsoleHandler.SorszamBekeres();
+                    int kovetkezoSorszam = ConsoleHandler.SorszamBekeres();
 
                     try
                     {
                         kovetkezoFejezet = fejezetek
-                            .Where(f => f.Sorszam == sorszam && aktualisFejezet.TovabbiLehetosegek.Contains(sorszam))
+                            .Where(f => f.Sorszam == kovetkezoSorszam && aktualisFejezet.TovabbiLehetosegek.Contains(kovetkezoSorszam))
                             .First();
                     }
                     catch (InvalidOperationException)

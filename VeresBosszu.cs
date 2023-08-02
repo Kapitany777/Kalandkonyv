@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kalandkonyv
 {
+    /// <summary>
+    /// A teljes történet
+    /// </summary>
     public class VeresBosszu : Tortenet
     {
         public VeresBosszu(Jatekos jatekos, bool harc) : base(jatekos, harc)
@@ -13,6 +16,9 @@ namespace Kalandkonyv
             this.Cim = "A véres bosszú";
         }
 
+        /// <summary>
+        /// A köszöntő szöveg kiírása
+        /// </summary>
         public override void Koszonto()
         {
             Console.WriteLine(this.Cim);
@@ -24,6 +30,9 @@ namespace Kalandkonyv
             Console.WriteLine();
         }
 
+        /// <summary>
+        /// A fejezetek létrehozása
+        /// </summary>
         public override void FejezetekLetrehozasa()
         {
             fejezetek = new List<Fejezet>
