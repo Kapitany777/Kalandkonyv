@@ -17,6 +17,11 @@ namespace Kalandkonyv
         public const int MAX_ELETERO = 100;
 
         /// <summary>
+        /// A játékos maximális sebzése
+        /// </summary>
+        public const int MAX_SEBZES = 10;
+
+        /// <summary>
         /// A játékosnál lévő gyógyitalok kezdeti száma
         /// </summary>
         public const int KEZDETI_GYOGYITAL = 4;
@@ -36,7 +41,7 @@ namespace Kalandkonyv
         /// </summary>
         public bool LehetGyogyitani => Eletero < MAX_ELETERO && Gyogyitalok > 0;
 
-        public Jatekos(string nev) : base(nev, MAX_ELETERO)
+        public Jatekos(string nev) : base(nev, MAX_ELETERO, MAX_SEBZES)
         {
             this.Gyogyitalok = KEZDETI_GYOGYITAL;
         }
@@ -60,10 +65,9 @@ namespace Kalandkonyv
             }
         }
 
-        public override void Kiir()
+        public override string Leiras()
         {
-            Console.WriteLine($"{this.Nev} | HP: {this.Eletero}");
-            Console.WriteLine();
+            return $"{this.Nev} | HP: {this.Eletero}";
         }
     }
 }

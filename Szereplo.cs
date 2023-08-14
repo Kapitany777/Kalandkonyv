@@ -21,12 +21,24 @@ namespace Kalandkonyv
         /// </summary>
         public int Eletero { get; protected set; }
 
+        /// <summary>
+        /// Az adott szereplő él-e még
+        /// </summary>
+        public bool Elo => this.Eletero > 0;
+
+        /// <summary>
+        /// Az adott szereplő maximális sebzése
+        /// </summary>
+        public int MaxSebzes { get; set; }
+
         public Szereplo(
             string nev,
-            int eletero)
+            int eletero,
+            int maxSebzes)
         {
             this.Nev = nev;
             this.Eletero = eletero;
+            this.MaxSebzes = maxSebzes;
         }
 
         /// <summary>
@@ -46,6 +58,6 @@ namespace Kalandkonyv
         /// <summary>
         /// A szereplő adatainak kiírása
         /// </summary>
-        public abstract void Kiir();
+        public abstract string Leiras();
     }
 }

@@ -63,7 +63,7 @@ namespace Kalandkonyv
 
             while (true)
             {
-                this.Jatekos.Kiir();
+                Console.WriteLine(this.Jatekos.Leiras());
 
                 aktualisFejezet.Kiir();
                 Console.WriteLine();
@@ -80,7 +80,17 @@ namespace Kalandkonyv
                     break;
                 }
 
-                aktualisFejezet.Szorny?.Kiir();
+                if (aktualisFejezet.Szorny != null)
+                {
+                    Console.WriteLine(aktualisFejezet.Szorny.Leiras());
+
+                    if (aktualisFejezet.Szorny.Agressziv)
+                    {
+                        Csata(aktualisFejezet.Szorny);
+                    }
+                }
+
+                // TODO: ha a játékos veszít, azt is kezelni kell
 
                 LehetosegekKiirasa(aktualisFejezet);
 
@@ -147,6 +157,39 @@ namespace Kalandkonyv
             {
                 Console.WriteLine("100 - Gyógyítás");
             }
+        }
+
+        public Szereplo Csata(Szorny szorny)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Rettenetes csata kezdődik!");
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            var rnd = new Random();
+
+            while (Jatekos.Elo && szorny.Elo)
+            {
+                int dobas1 = rnd.Next(20);
+                int dobas2 = rnd.Next(20);
+                Console.WriteLine($"{dobas1} {dobas2}");
+
+                if (dobas1 < dobas2)
+                {
+                    int sebzes = rnd.Next(szorny.MaxSebzes) + 1;
+                    Jatekos.Sebez(sebzes);
+                }
+                else
+                {
+                    int sebzes = rnd.Next(Jatekos.MaxSebzes) + 1;
+                    szorny.Sebez(sebzes);
+                }
+
+                Console.WriteLine($"{Jatekos.Nev} {Jatekos.Eletero} | {szorny.Nev} {szorny.Eletero}");
+                Thread.Sleep(100);
+            }
+
+            return Jatekos.Elo ? Jatekos : szorny;
+
         }
     }
 }
