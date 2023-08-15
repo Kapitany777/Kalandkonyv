@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kalandkonyv
 {
+    /// <summary>
+    /// Troll
+    /// </summary>
     public class Troll : Szorny
     {
         public Troll(bool agressziv) : base("Troll", 100, 25, agressziv)

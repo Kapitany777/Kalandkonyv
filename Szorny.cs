@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kalandkonyv
 {
+    /// <summary>
+    /// A szörny szereplők ősosztálya
+    /// </summary>
     public abstract class Szorny : Szereplo
     {
         /// <summary>
@@ -20,13 +23,20 @@ namespace Kalandkonyv
 
         private readonly Random rnd = new();
 
+        /// <summary>
+        /// A szörny létrehozása
+        /// </summary>
+        /// <param name="nev">A szörny neve</param>
+        /// <param name="eletero">A szörny kiinduló életereje</param>
+        /// <param name="maxSebzes">A szörny maximális sebzése</param>
+        /// <param name="agressziv">Agresszív-e a szörny?</param>
         public Szorny(
             string nev,
             int eletero,
             int maxSebzes,
             bool agressziv) : base(nev, eletero, maxSebzes)
         {
-            Agressziv = agressziv;
+            this.Agressziv = agressziv;
         }
 
         /// <summary>
@@ -46,14 +56,14 @@ namespace Kalandkonyv
         /// <summary>
         /// Az adott szörny leírásának meghatározása
         /// </summary>
-        /// <returns>A leírás</returns>
+        /// <returns>A szörny leírása</returns>
         public override string Leiras()
         {
             var sb = new StringBuilder();
 
             if (this.Elo)
             {
-                sb.AppendLine($"Itt áll egy {this.Nev}.");
+                sb.AppendLine($"Előtted áll egy {this.Nev}!");
 
                 if (this.Agressziv)
                 {
@@ -61,7 +71,7 @@ namespace Kalandkonyv
                 }
                 else
                 {
-                    sb.AppendLine("Szerencsére ma békés hangulatban van, nem támad rád.");
+                    sb.AppendLine("Szerencsére ma békés hangulatban van, így nem támad rád.");
                 }
             }
             else

@@ -49,7 +49,7 @@ namespace Kalandkonyv
         public static int SorszamBekeres()
         {
             string? valasz = string.Empty;
-            int sorszam = 0;
+            int sorszam;
 
             while (string.IsNullOrEmpty(valasz) || !int.TryParse(valasz, out sorszam))
             {
@@ -58,6 +58,18 @@ namespace Kalandkonyv
             }
 
             return sorszam;
+        }
+
+        /// <summary>
+        /// Színes szöveg kiírása
+        /// </summary>
+        /// <param name="szoveg">A kiírandó szöveg</param>
+        /// <param name="color">A kiírás színe</param>
+        public static void SzinesSzovegKiirasa(string szoveg, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(szoveg);
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

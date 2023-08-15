@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Kalandkonyv
 {
+    /// <summary>
+    /// Goblin
+    /// </summary>
     public class Goblin : Szorny
     {
         public Goblin(bool agressziv) : base("Goblin", 10, 5, agressziv)

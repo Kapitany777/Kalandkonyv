@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Üdvözöllek a Véres bosszú című játékban!");
+            ConsoleHandler.SzinesSzovegKiirasa("Üdvözöllek a Véres bosszú című játékban!", ConsoleColor.Green);
             Console.WriteLine();
 
             string nev = ConsoleHandler.NevBekerese();
@@ -18,6 +18,7 @@
 
             Console.Clear();
             tortenet.Futtatas();
+            Console.WriteLine("Köszönöm, hogy játszottál a programmal!");
         }
     }
 }

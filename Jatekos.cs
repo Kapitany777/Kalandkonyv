@@ -41,6 +41,10 @@ namespace Kalandkonyv
         /// </summary>
         public bool LehetGyogyitani => Eletero < MAX_ELETERO && Gyogyitalok > 0;
 
+        /// <summary>
+        /// A játékos létrehozása
+        /// </summary>
+        /// <param name="nev">A játékos neve</param>
         public Jatekos(string nev) : base(nev, MAX_ELETERO, MAX_SEBZES)
         {
             this.Gyogyitalok = KEZDETI_GYOGYITAL;
@@ -65,6 +69,18 @@ namespace Kalandkonyv
             }
         }
 
+        /// <summary>
+        /// A játékos teljes felgyógyítása
+        /// </summary>
+        public void TeljesGyogyitas()
+        {
+            this.Eletero = MAX_ELETERO;
+        }
+
+        /// <summary>
+        /// A játékos leírásának összeállítása
+        /// </summary>
+        /// <returns>A játékos leírása</returns>
         public override string Leiras()
         {
             return $"{this.Nev} | HP: {this.Eletero}";

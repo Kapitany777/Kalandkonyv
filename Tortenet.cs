@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.ConsoleColor;
 
 namespace Kalandkonyv
 {
@@ -31,6 +32,11 @@ namespace Kalandkonyv
         /// </summary>
         protected List<Fejezet> fejezetek;
 
+        /// <summary>
+        /// A történet létrehozása
+        /// </summary>
+        /// <param name="jatekos">A játékos</param>
+        /// <param name="harc">Legyen-e harc a játékban?</param>
         public Tortenet(Jatekos jatekos, bool harc)
         {
             this.Cim = string.Empty;
@@ -60,23 +66,23 @@ namespace Kalandkonyv
             Koszonto();
 
             var aktualisFejezet = fejezetek[0];
+            bool kilepes = false;
 
-            while (true)
+            while (!kilepes)
             {
-                Console.WriteLine(this.Jatekos.Leiras());
+                ConsoleHandler.SzinesSzovegKiirasa(this.Jatekos.Leiras(), Yellow);
 
-                aktualisFejezet.Kiir();
-                Console.WriteLine();
+                Console.WriteLine(aktualisFejezet.Leiras());
 
-                if (aktualisFejezet.Gyozelem)
+                if (aktualisFejezet.Befejezes)
                 {
-                    Console.WriteLine("Gratulálok, megnyerted a játékot!");
+                    ConsoleHandler.SzinesSzovegKiirasa("Gratulálok, megnyerted a játékot!", Green);
                     break;
                 }
 
                 if (aktualisFejezet.TovabbiLehetosegek.Count == 0)
                 {
-                    Console.WriteLine("Kalandod itt véget ér...");
+                    ConsoleHandler.SzinesSzovegKiirasa("Kalandod itt véget ér...", Red);
                     break;
                 }
 
@@ -84,13 +90,24 @@ namespace Kalandkonyv
                 {
                     Console.WriteLine(aktualisFejezet.Szorny.Leiras());
 
-                    if (aktualisFejezet.Szorny.Agressziv)
+                    if (aktualisFejezet.Szorny.Agressziv && aktualisFejezet.Szorny.Elo)
                     {
-                        Csata(aktualisFejezet.Szorny);
+                        if (Csata(aktualisFejezet.Szorny) == this.Jatekos)
+                        {
+                            ConsoleHandler.SzinesSzovegKiirasa("Legyőzted a szörnyet!", Blue);
+                            Console.WriteLine();
+                        }
+                        else
+                        {
+                            ConsoleHandler.SzinesSzovegKiirasa("Legyőzött a szörny!", Red);
+                            ConsoleHandler.SzinesSzovegKiirasa("Kalandod itt véget ér...", Red);
+                            Console.WriteLine();
+
+                            kilepes = true;
+                            continue;
+                        }
                     }
                 }
-
-                // TODO: ha a játékos veszít, azt is kezelni kell
 
                 LehetosegekKiirasa(aktualisFejezet);
 
@@ -99,6 +116,14 @@ namespace Kalandkonyv
                 do
                 {
                     int kovetkezoSorszam = ConsoleHandler.SorszamBekeres();
+                    Console.WriteLine();
+
+                    // Ha ki szeretne lépni a programból
+                    if (kovetkezoSorszam == 0)
+                    {
+                        kilepes = true;
+                        break;
+                    }
 
                     // Ha gyógyítani szeretne
                     if (kovetkezoSorszam == 100)
@@ -114,6 +139,8 @@ namespace Kalandkonyv
                         {
                             Console.WriteLine("Most nincs erre szükség.");
                         }
+
+                        Console.WriteLine();
 
                         continue;
                     }
@@ -131,7 +158,10 @@ namespace Kalandkonyv
                     }
                 } while (kovetkezoFejezet == null);
 
-                aktualisFejezet = kovetkezoFejezet;
+                if (kovetkezoFejezet != null)
+                {
+                    aktualisFejezet = kovetkezoFejezet;
+                }
             }
         }
 
@@ -141,7 +171,7 @@ namespace Kalandkonyv
         /// <param name="fejezet">A kiírandó fejezet</param>
         private void LehetosegekKiirasa(Fejezet fejezet)
         {
-            Console.WriteLine("Merre mész tovább?");
+            Console.WriteLine("Merre mész tovább, vagy mit teszel?");
 
             foreach (int lehetoseg in fejezet.TovabbiLehetosegek)
             {
@@ -157,13 +187,20 @@ namespace Kalandkonyv
             {
                 Console.WriteLine("100 - Gyógyítás");
             }
+
+            Console.WriteLine("0 - Kilépés a játékból");
+
+            Console.WriteLine();
         }
 
+        /// <summary>
+        /// Csata a játékos és egy szörny között
+        /// </summary>
+        /// <param name="szorny">A szörny, akivel meg kell küzdeni</param>
+        /// <returns>A csata győztese</returns>
         public Szereplo Csata(Szorny szorny)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Rettenetes csata kezdődik!");
-            Console.ForegroundColor = ConsoleColor.Gray;
+            ConsoleHandler.SzinesSzovegKiirasa("Rettenetes csata kezdődik!", Red);
 
             var rnd = new Random();
 
@@ -171,25 +208,29 @@ namespace Kalandkonyv
             {
                 int dobas1 = rnd.Next(20);
                 int dobas2 = rnd.Next(20);
-                Console.WriteLine($"{dobas1} {dobas2}");
+                // Console.WriteLine($"{dobas1} {dobas2}");
+
+                string nyil;
 
                 if (dobas1 < dobas2)
                 {
                     int sebzes = rnd.Next(szorny.MaxSebzes) + 1;
-                    Jatekos.Sebez(sebzes);
+                    Jatekos.Megsebez(sebzes);
+                    nyil = "<-";
                 }
                 else
                 {
                     int sebzes = rnd.Next(Jatekos.MaxSebzes) + 1;
-                    szorny.Sebez(sebzes);
+                    szorny.Megsebez(sebzes);
+                    nyil = "->";
                 }
 
-                Console.WriteLine($"{Jatekos.Nev} {Jatekos.Eletero} | {szorny.Nev} {szorny.Eletero}");
+                Console.WriteLine($"{Jatekos.Nev} HP: {Jatekos.Eletero} {nyil} {szorny.Nev} HP: {szorny.Eletero}");
+                Console.WriteLine();
                 Thread.Sleep(100);
             }
 
             return Jatekos.Elo ? Jatekos : szorny;
-
         }
     }
 }

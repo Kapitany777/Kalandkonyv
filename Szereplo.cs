@@ -9,7 +9,7 @@ namespace Kalandkonyv
     /// <summary>
     /// A játék egy szereplője
     /// </summary>
-    public abstract class Szereplo
+    public abstract class Szereplo : ILeirhato
     {
         /// <summary>
         /// A szereplő neve
@@ -31,6 +31,12 @@ namespace Kalandkonyv
         /// </summary>
         public int MaxSebzes { get; set; }
 
+        /// <summary>
+        /// A szereplő létrehozása
+        /// </summary>
+        /// <param name="nev">A szereplő neve</param>
+        /// <param name="eletero">A szereplő kiinduló életereje</param>
+        /// <param name="maxSebzes">A szereplő maximális sebzése</param>
         public Szereplo(
             string nev,
             int eletero,
@@ -45,7 +51,7 @@ namespace Kalandkonyv
         /// A szereplő megsebzése
         /// </summary>
         /// <param name="sebzes">Ennyi életerőt veszít a szereplő</param>
-        public void Sebez(int sebzes)
+        public void Megsebez(int sebzes)
         {
             this.Eletero -= sebzes;
 
@@ -56,8 +62,9 @@ namespace Kalandkonyv
         }
 
         /// <summary>
-        /// A szereplő adatainak kiírása
+        /// A szereplő leírásának összeállítása
         /// </summary>
+        /// <returns>A szereplő leírása</returns>
         public abstract string Leiras();
     }
 }
